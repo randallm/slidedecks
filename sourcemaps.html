@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Source Maps</title>
+    <meta charset="utf-8">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+    <style>
+
+body { font-family: 'Source Sans Pro'; }
+
+.remark-slide-content {
+  background: #30383B;
+  color: #E2D8D3;
+}
+
+img {
+  max-width: 250px;
+}
+
+.left-column {
+  width: 30%;
+  height: 92%;
+  float: left;
+  color: #6E6865;
+}
+.right-column {
+  width: 65%;
+  float: right;
+  padding-top: .75em;
+}
+
+.left-column h2:last-of-type, .left-column h3:last-of-type, .left-column h4:last-of-type {
+  color: #E2D8D3;
+}
+
+.fuck-it-lets-make-it-a-little-smaller h1 {
+  font-size: 80px !important;
+}
+
+.remark-slide-content h1 {
+  font-size:120px;
+}
+
+.remark-slide-content h2 {
+  font-size:50px;
+}
+
+.remark-slide-content h3 {
+  font-size: 28px;
+}
+</style>
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Source Maps
+
+---
+
+.left-column[
+  ### What are they?
+]
+.right-column[
+- JSON files that map built code into unbuilt code
+
+- Inspect CoffeeScript instead of minified ES5
+
+![](https://cdn.tutsplus.com/net/authors/sayanee-basu/source-maps-coffee.png)
+
+- Spec is easy to read (Google "Source Map Proposal")
+
+```js
+{"version" : 3,
+"file": "out.js",
+"sourceRoot": "",
+"sources": ["foo.js", "bar.js"],
+"sourcesContent": [null, null],
+"names": ["src", "maps", "are", "fun"],
+"mappings": "A,AAAB;;ABCDE;"}
+  ```
+]
+
+---
+
+.left-column[
+  ### What are they?
+  ### How do I use them?
+  #### 1. Grunt
+]
+
+.right-column[
+
+- js task runner (like `rake`)
+
+![](http://i.ytimg.com/vi/C_fEIVwjrew/maxresdefault.jpg)
+
+  - gulp is BYOC, favors imperative code w/ heavy use of pipes
+
+  ```js
+  gulp.task('images', ['clean'], function() {
+    return gulp.src(paths.images)
+      .pipe(imagemin({optimizationLevel: 5}))
+      .pipe(gulp.dest('build/img'));
+    });
+  ```
+
+  - grunt is 99% configuration files
+
+  ```coffeescript
+  watch:
+    main:
+      files: "<%= watchedFiles %>"
+      tasks: ["exec:mince"]
+  ```
+]
+
+---
+
+.left-column[
+  ### What are they?
+  ### How do I use them?
+  #### 1. Grunt
+  #### 2. mincer-simple-server
+]
+
+.right-column[
+
+- authored by randall ma
+  - aliases: github/randallm, yung python, cam'ron the coffeescripter
+
+- two step process
+
+  1. `node serve.js --root /Users/randall/project/ --include scripts --files app.js.coffee`
+  2. `curl -X PUT localhost:3000`
+
+- persistent mincer environment, so you can integrate it into your `Procfile` and have assets compiled in real time without a big performance hit
+]
+
+---
+
+.left-column[
+  ### What are they?
+  ### How do I use them?
+  #### 1. Grunt
+  #### 2. mincer-simple-server
+  #### 3. Mincer
+]
+
+.right-column[
+- it's Sprockets™
+  - sprockets in a node environment
+  - `#= require` everywhere
+  - the api is 99.99999% the same (standard deviation = 0)
+
+- compiles and concats js into one file
+- generates "coffee --> js source map"
+]
+
+---
+
+.left-column[
+  ### What are they?
+  ### How do I use them?
+  #### 1. Grunt
+  #### 2. mincer-simple-server
+  #### 3. Mincer
+  #### 4. UglifyJS
+]
+
+.right-column[
+- minifies js
+
+- converts "coffee --> js" source map to "coffee --> js --> minified js"
+  - `--in-source-map` parameter takes care of this for you
+
+]
+
+---
+
+class: center, middle
+
+# tmtowtdi in mincer
+
+---
+
+class: center, middle, fuck-it-lets-make-it-a-little-smaller
+
+# #=sourceMappingURL
+
+---
+
+class: center, middle
+
+# open ports
+
+---
+
+class: center, middle
+
+# performance
+
+---
+
+class: center, middle
+
+# ¿Preguntas?
+
+</textarea>
+
+<!-- ## #=source mapping url snafus
+
+class: center, middle
+
+# Q's? -->
+
+
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+      var slideshow = remark.create({ratio: '16:9'});
+
+      // $(document).ready(function() {
+      //   $('ol').attr('reversed', 'reversed')
+      // })
+    </script>
+  </body>
+</html>
