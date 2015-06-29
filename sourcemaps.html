@@ -155,8 +155,11 @@ class: center, middle
   - `#= require` everywhere
   - the api is 99.99999% the same (standard deviation = 0)
 
-- compiles and concats js into one file
-- generates "coffee --> js source map"
+- compiles and concats js into one file, generates "coffee --> js source map"
+- **tmtowtdi in mincer**
+  - `Manifest` compiles assets with fingerprints, `Server` compiles and serves files
+  - both of these are great, but too much for what we need
+  - we call the lower level, `Mincer.findAsset`, which takes care of everything we need to
 - although `FileStore` exists to cache the contents of compiled js and source maps, it's not quite fast enough to use with the live reloader
   - no FileStore + source maps: ~20s compiles
   - FileStore + source maps: ~5s compiles
@@ -180,25 +183,30 @@ class: center, middle
 - converts "coffee --> js" source map to "coffee --> js --> minified js"
   - `--in-source-map` parameter takes care of this for you
 
+- runs on port 3000 by default
+  - customize it for the build server, so that when we `kill -15` the process by port, we don't kill foreman 
+  - be careful with open ports!
 ]
 
 ---
 
-class: center, middle
+.left-column[
+  ### What are they?
+  ### How do I use them?
+  #### 1. Grunt
+  #### 2. mincer-simple-server
+  #### 3. Mincer
+  #### 4. UglifyJS
+  #### 5. ~~IE~~ Chrome
+]
 
-# tmtowtdi in mincer
+- it "just works"!
+  - ...with the `#=sourceMappingURL` comment at the bottom of the compiled JS file
+  - make sure you get the comment right, since you can't manually load source maps with malformed comments
 
----
+![](http://i.imgur.com/jEdKHc6.png)
 
-class: center, middle, fuck-it-lets-make-it-a-little-smaller
-
-# #=sourceMappingURL
-
----
-
-class: center, middle
-
-# open ports
+- you can take this autoloaded .js.map file and selectively serve it to an ip block or whitelist if you care about obfuscation
 
 ---
 
