@@ -97,7 +97,7 @@ class: center, middle
 
 ![](http://i.ytimg.com/vi/C_fEIVwjrew/maxresdefault.jpg)
 
-  - gulp is BYOC, favors imperative code w/ heavy use of pipes
+  - gulp favors writing your own, imperative code w/ heavy use of pipes
 
   ```js
   gulp.task('images', ['clean'], function() {
@@ -157,6 +157,10 @@ class: center, middle
 
 - compiles and concats js into one file
 - generates "coffee --> js source map"
+- although `FileStore` exists to cache the contents of compiled js and source maps, it's not quite fast enough to use with the live reloader
+  - no FileStore + source maps: ~20s compiles
+  - FileStore + source maps: ~5s compiles
+  - FileStore: ~1s compiles
 ]
 
 ---
@@ -195,12 +199,6 @@ class: center, middle, fuck-it-lets-make-it-a-little-smaller
 class: center, middle
 
 # open ports
-
----
-
-class: center, middle
-
-# performance
 
 ---
 
